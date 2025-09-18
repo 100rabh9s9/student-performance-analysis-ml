@@ -1,0 +1,113 @@
+{% extends 'STUDENT/studentCommon.html' %}
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Required by Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ============================ Page Title Start ================================== -->
+<section class="page-title">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">   
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title">Student Performance Prediction</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Performance Prediction</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============================ Page Title End ================================== -->
+
+<section class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 mx-auto">
+                <div class="prc_wrap">
+                    <div class="prc_wrap_header">
+                        <h3 class="property_block_title text-center text-primary">Enter Your Scores</h3>
+                    </div>
+
+                    <div class="prc_wrap-body">
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label>Math Score</label>
+                                <input type="number" name="math_score"  min="0" max="100" class="form-control" placeholder="Enter Math Score" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Reading Score</label>
+                                <input type="number" name="reading_score" min="0" max="100" class="form-control" placeholder="Enter Reading Score" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Writing Score</label>
+                                <input type="number" name="writing_score"  min="0" max="100" class="form-control" placeholder="Enter Writing Score" required>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary">Submit Scores</button>
+                            </div>
+                        </form>
+
+                        {% if student_performance %}
+                            <!-- Pop-up (Modal) for Result -->
+                            <div id="performanceModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="performanceModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="performanceModalLabel">Prediction Result</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><strong>Prediction Result:</strong> {{ student_performance }}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Add the Chart -->
+                            <canvas id="performanceChart" width="400" height="400"></canvas>
+
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                            <script>
+                                // Data for the chart
+                                var ctx = document.getElementById('performanceChart').getContext('2d');
+                                var performanceData = {
+                                    labels: ['High Performer', 'Needs Improvement'],
+                                    datasets: [{
+                                        label: 'Performance Prediction',
+                                        data: [{{ high_performer_count }}, {{ needs_improvement_count }}], // Dynamically passed from Django
+                                        backgroundColor: ['#36A2EB', '#FF6384'],
+                                        hoverBackgroundColor: ['#36A2EB', '#FF6384']
+                                    }]
+                                };
+
+                                var performanceChart = new Chart(ctx, {
+                                    type: 'pie',
+                                    data: performanceData
+                                });
+
+                                // Automatically show the modal when the result is available
+                                $('#performanceModal').modal('show');
+                            </script>
+                        {% endif %}
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

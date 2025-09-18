@@ -1,0 +1,112 @@
+{% extends 'STUDENT/studentCommon.html' %}
+{% block content %}
+
+<!-- ============================ Page Title Start ================================== -->
+<section class="page-title">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title">View Submission Date</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">View Submission Date</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============================ Page Title End ================================== -->
+
+<section class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h3 class="text-center text-primary">PROJECT SUBMISSION SCHEDULE</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped text-center">
+                        <thead class="bg-primary text-white">
+                            <tr>
+                                <th>Course</th>
+                                <th>Department</th>
+                                <th>Submission Date</th>
+                                <th>Submission Type</th>
+                                <th>Document Type</th>
+                                <th>First Review</th>
+                                <th>Second Review</th>
+                                <th>Third Review</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for schedule in schedules %}
+                            <tr>
+                                <td>{{ schedule.course }}</td>
+                                <td>{{ schedule.department }}</td>
+                                <td>{{ schedule.submission_date }}</td>
+                                <td>{{ schedule.submission_type }}</td>
+                                <td>{{ schedule.document_type }}</td>
+
+                                <!-- ✅ First Review Section -->
+                                <td>
+                                    {{ schedule.first_review_date }}
+                                    {% if schedule.first_review_date > today %}
+                                        
+                                        <br>
+                                        <a href="/submitFirstReview?id={{schedule.id}}" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-upload"></i> Submit First Review
+                                        </a><br><br>
+                                    {% else %}
+                                            <span style="color: crimson;"><i class="fas fa-upload"></i> Submited</span>
+                                    {% endif %}
+                                </td>
+
+                                <!-- ✅ Second Review Section -->
+                                <td>
+                                    {{ schedule.second_review_date }}
+                                    {% if schedule.first_review_date < today and schedule.second_review_date >= today %}
+                                        
+                                        <br>
+                                        <a href="/submitSecondReview?id={{schedule.id}}" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-upload"></i> Submit Second Review
+                                        </a>
+                                    {% elif schedule.second_review_date >= today %}
+                                        <a href="/submitSecondReview?id={{schedule.id}}" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-upload"></i> Submit Second Review
+                                        </a>
+                                    {% else %}
+                                        <span class="text-danger">Submited</span>
+                                    {% endif %}
+                                </td>
+
+                                <!-- ✅ Third Review Section -->
+                                <td>
+                                    {{ schedule.third_review_date }}
+                                    {% if schedule.second_review_date < today and schedule.third_review_date > today %}
+                                       
+                                        <br>
+                                        <a href="/submitThirdReview?id={{schedule.id}}" class="btn btn-sm btn-success">
+                                            <i class="fas fa-upload"></i> Submit Third Review
+                                        </a>
+                                    {% elif schedule.second_review_date < today %}
+                                        <a href="/submitThirdReview?id={{schedule.id}}" class="btn btn-sm btn-success">
+                                            <i class="fas fa-upload"></i> Submit Third Review
+                                        </a>
+                                    {% else %}
+                                        <span class="text-danger">Pending Second Review</span>
+                                    {% endif %}
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

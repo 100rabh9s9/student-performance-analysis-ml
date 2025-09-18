@@ -1,0 +1,93 @@
+{% extends 'STUDENT/studentCommon.html' %}
+{% block content %}
+
+
+<!-- ============================ Page Title Start ================================== -->
+<section class="page-title">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="breadcrumbs-wrap">
+                    <h1 class="breadcrumb-title">Student Performance Prediction</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Performance Prediction</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ============================ Page Title End ================================== -->
+
+<section class="bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 mx-auto">
+                <div class="prc_wrap">
+                    <div class="prc_wrap_header">
+                        <h3 class="property_block_title text-center text-primary">Enter Your Scores</h3>
+                    </div>
+
+                    <div class="prc_wrap-body">
+                        <form method="POST">
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <label>Math Score</label>
+                                <input type="number" name="math_score" class="form-control" placeholder="Enter Math Score" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Reading Score</label>
+                                <input type="number" name="reading_score" class="form-control" placeholder="Enter Reading Score" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Writing Score</label>
+                                <input type="number" name="writing_score" class="form-control" placeholder="Enter Writing Score" required>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <button type="submit" class="btn btn-primary">Submit Scores</button>
+                            </div>
+                        </form>
+
+                        {% if student_performance %}
+                            <div class="alert alert-info text-center">
+                                <strong>Prediction Result:</strong> {{ student_performance }}
+                            </div>
+                            
+                            <!-- Add the Chart -->
+                            <canvas id="performanceChart" width="400" height="400"></canvas>
+
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                            <!-- <script>
+                                // Data for the chart
+                                var ctx = document.getElementById('performanceChart').getContext('2d');
+                                var performanceData = {
+                                    labels: ['High Performer', 'Needs Improvement'],
+                                    datasets: [{
+                                        label: 'Performance Prediction',
+                                        data: [{{ high_performer_count }}, {{ needs_improvement_count }}], // Dynamically passed from Django
+                                        backgroundColor: ['#36A2EB', '#FF6384'],
+                                        hoverBackgroundColor: ['#36A2EB', '#FF6384']
+                                    }]
+                                }; -->
+
+                                <!-- var performanceChart = new Chart(ctx, {
+                                    type: 'pie',
+                                    data: performanceData
+                                });
+                            </script> -->
+                        {% endif %}
+                    </div>
+                </div>				
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

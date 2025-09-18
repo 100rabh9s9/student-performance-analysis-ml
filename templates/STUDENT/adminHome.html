@@ -1,0 +1,477 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	
+<!-- Mirrored from themezhub.net/learnup-demo-2/learnup/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 05 Mar 2025 18:37:24 GMT -->
+<head>
+		<meta charset="utf-8" />
+		<meta name="author" content="www.frebsite.nl" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		
+        <title>Admin Home Page </title>
+		 
+        <!-- Custom CSS -->
+        <link href="{% static 'assets/css/styles.css' %}" rel="stylesheet">
+		
+		<!-- Custom Color Option -->
+		<link href="{% static 'assets/css/colors.css' %}" rel="stylesheet">
+		
+    </head>
+	{% for m in messages %}
+<script>
+    alert("{{m}}");
+</script>
+{% endfor %}
+	
+    <body class="red-skin">
+        <div id="main-wrapper">
+		
+			<div class="header header-light">
+				<div class="container">
+					<nav id="navigation" class="navigation navigation-landscape">
+						<div class="nav-header">
+							<a class="nav-brand" href="#" >
+								<img src="{% static 'assets/img/logo.png' %}" class="logo" alt="" />
+							</a>
+							<div class="nav-toggle"></div>
+						</div>
+						<div class="nav-menus-wrapper" style="transition-property: none;">
+							<ul class="nav-menu"  style="margin-left: 150px;">
+							
+								<li class="active"><a href="/">Home<span class="submenu-indicator" style="margin-left: 30px;"></span></a>
+								 
+                                <li><a href="/studentReg" style="margin-left: 30px;">Student Registration</a></li>
+								
+							</ul>
+							
+							<ul class="nav-menu nav-menu-social align-to-right">
+								
+								<li class="login_click light">
+									 
+										<a href="/log_out" data-target="#log_out">Logout</a>
+									</li>
+							</ul>
+						</div>
+					</nav>
+				</div>
+			</div>
+			<!-- End Navigation -->
+			<div class="clearfix"></div>
+			
+			<!-- ============================ Hero Banner  Start================================== -->
+			<div class="image-cover hero_banner hero-inner-2 shadow rlt" style="background:url(/static/assets/img/banner-2.jpg) no-repeat;" data-overlay="7">
+				<div class="container">
+					
+					<div class="hero-caption small_wd mb-5">
+						<h1 class="big-header-capt cl_2 mb-0">Welcome Home Admin </h1>
+						<p>See the List of Students and Update or Delete Existing Users</p>
+					</div>					
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ============================ Hero Banner End ================================== -->
+			{% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<!-- ============================ User Table Start ================================== -->
+			<section class="p-0 user_table">
+				<div class="container">
+					<h2 class="text-center">Registered Users</h2>
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+			<th>User ID</th>
+			<th>Username</th>
+			<th>Email</th>
+			<th>Address</th>
+			<th>Department</th>
+			<th>Year</th>
+			<th>ACTIONS</th>
+			</tr>
+		</thead>
+<tbody>
+    {% for user in users %}
+        <tr>
+		<td>{{ user.id }}</td>
+		<td>{{ user.Username }}</td>
+		<td>{{ user.Email }}</td>
+		<td>{{ user.Address }}</td>
+		<td>{{ user.Dept }}</td>
+		<td>{{ user.Year }}</td>
+		<td> 
+			{% comment %} <a href="/updateuser?id={{user.id}}">Update</a> {% endcomment %}
+			<a href="{% url 'updatestudent' user.id %}" class="btn btn-primary">Modify</a>
+			<a href="{% url 'deletestudent' user.id %}" class="btn btn-danger"
+                 onclick="return confirm('Are you sure you want to delete this student? This action cannot be undone!');"> Delete</a>
+
+</td>
+        </tr>
+    {% endfor %}	
+					{% comment %} <div class="col-lg-4 col-md-4 col-sm-12">
+								<div class="trips">
+									<div class="trips_icons">
+										<i class="ti-video-camera"></i>
+									</div>
+									<div class="trips_detail">
+										<h4>Evaluate Your Performance</h4>
+										<p>Check Your Performance . See if you are doing well or not</p>
+									</div>
+								</div>
+							</div> {% endcomment %}
+							
+							{% comment %} <div class="col-lg-4 col-md-4 col-sm-12">
+								<div class="trips">
+									<div class="trips_icons">
+										<i class="ti-medall"></i>
+									</div>
+									<div class="trips_detail">
+										<h4>We Only Need Your Math, Reading and Writing Scores</h4>
+										<p>These Define how your SKILLS are rather than your Academic Background</p>
+									</div>
+								</div>
+							</div> {% endcomment %}
+							
+							{% comment %} <div class="col-lg-4 col-md-4 col-sm-12">
+								<div class="trips none">
+									<div class="trips_icons">
+										<i class="ti-infinite"></i>
+									</div>
+									<div class="trips_detail">
+										<h4>A Room for Improvement</h4>
+										<p>IF You need Improvement just begin . We all are Beginners</p>
+									</div>
+								</div>
+							</div> {% endcomment %}
+							
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<!-- ========================== Articles Section =============================== -->
+			<section class="min-sec">
+				<div class="container">
+				
+					<div class="row justify-content-center">
+						<div class="col-lg-12 col-md-12">
+							<div class="sec-heading-flex">
+								<h2 class="pl-2">Recent Articles</h2>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+								
+						<!-- Single Article -->
+						<div class="col-lg-4 col-md-4 col-sm-12">
+							<div class="articles_grid_style">
+								<div class="articles_grid_thumb">
+									<a href="/blogdetail"><img src="{% static 'assets/img/b-1.jpg' %}" class="img-fluid" alt="" /></a>
+								</div>
+								
+								<div class="articles_grid_caption">
+									<h4>How is a Good Student Defined </h4>
+									<div class="articles_grid_author">
+										<div class="articles_grid_author_img"><img src="{% static 'assets/img/user-1.jpg' %}" class="img-fluid" alt="" /></div>
+										<h4>Sourabh S </h4>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Single Article -->
+						<div class="col-lg-4 col-md-4 col-sm-12">
+							<div class="articles_grid_style">
+								<div class="articles_grid_thumb">
+									<a href="/blogdetail"><img src="{% static 'assets/img/b-2.jpg' %}" class="img-fluid" alt="" /></a>
+								</div>
+								<div class="articles_grid_caption">
+									<h4>The National Minimum wage is an important part</h4>
+									<div class="articles_grid_author">
+										<div class="articles_grid_author_img"><img src="{% static 'assets/img/user-2.jpg' %}" class="img-fluid" alt="" /></div>
+										<h4>Rikki Sen</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Single Article -->
+						<div class="col-lg-4 col-md-4 col-sm-12">
+							<div class="articles_grid_style">
+								<div class="articles_grid_thumb">
+									<a href="/blogdetail"><img src="{% static 'assets/img/b-3.jpg' %}" class="img-fluid" alt="" /></a>
+								</div>
+								
+								<div class="articles_grid_caption">
+									<h4>The National Minimum wage is an important part</h4>
+									<div class="articles_grid_author">
+										<div class="articles_grid_author_img"><img src="{% static 'assets/img/user-3.jpg' %}" class="img-fluid" alt="" /></div>
+										<h4>Daniel Wikjones</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					
+					</div>
+				</div>
+			</section>
+			<!-- ========================== Articles Section =============================== -->
+						
+			<!-- ============================== Start Newsletter ================================== -->
+			<section class="bg-cover newsletter inverse-theme" style="background:url(/static/assets/img/banner-2.jpg);" data-overlay="9">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-7 col-md-8 col-sm-12">
+							<div class="text-center">
+								<h2>This is a Machine Learning project</h2>
+								<p>Student Performance Analysis Using Machine Learning Using Machine Learning </p>
+								<form class="sup-form">
+									<input type="email" class="form-control sigmup-me" placeholder="Your Email Address" required="required">
+									<input type="submit" class="btn btn-theme" value="Get Started">
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- ================================= End Newsletter =============================== -->
+			
+			<!-- ============================ Footer Start ================================== -->
+			<footer class="light-footer">
+				<div>
+					<div class="container">
+						<div class="row">
+							
+							<div class="col-lg-3 col-md-3">
+								<div class="footer-widget">
+									<img src="{% static 'assets/img/logo.png' %}" class="img-footer" alt="" />
+									<div class="footer-add">
+										<p>Seth Ram Bahadur Singh Gujarati College .</p>
+										<p>+91 1234567890 </p>
+										<p>somemail@gmail.com</p>
+									</div>
+									
+								</div>
+							</div>		
+							<div class="col-lg-2 col-md-3">
+								<div class="footer-widget">
+									<h4 class="widget-title">Navigations</h4>
+									<ul class="footer-menu">
+										<li><a href="/studentReg">Registration</a></li>
+										<li><a href="/login">Login </a></li>
+										<li><a href="/">Home </a></li>
+										<li><a href="/blogdetail">Blog</a></li>
+									</ul>
+								</div>
+							</div>
+									
+							<div class="col-lg-2 col-md-3">
+								<div class="footer-widget">
+									<h4 class="widget-title">New Categories</h4>
+									<ul class="footer-menu">
+										<li><a href="#">Kaggle</a></li>
+										<li><a href="#">Google </a></li>
+										<li><a href="#">Youtube </a></li>
+										<li><a href="#">PHP</a></li>
+									</ul>
+								</div>
+							</div>
+							
+							<div class="col-lg-2 col-md-3">
+								<div class="footer-widget">
+									<h4 class="widget-title">Help & Support</h4>
+									<ul class="footer-menu">
+										<li><a href="#">Documentation</a></li>
+										<li><a href="#">Live Chat</a></li>
+										<li><a href="#">Mail Us</a></li>
+										<li><a href="#">FAQs</a></li>
+									</ul>
+								</div>
+							</div>
+							
+							<div class="col-lg-3 col-md-12">
+								<div class="footer-widget">
+									<h4 class="widget-title">Download Apps</h4>
+									<a href="#" class="other-store-link">
+										<div class="other-store-app">
+											<div class="os-app-icon">
+												<i class="lni-playstore theme-cl"></i>
+											</div>
+											<div class="os-app-caps">
+												Google Play
+												<span>Will be soon Available</span>
+											</div>
+										</div>
+									</a>
+									<a href="#" class="other-store-link">
+										<div class="other-store-app">
+											<div class="os-app-icon">
+												<i class="lni-apple theme-cl"></i>
+											</div>
+											<div class="os-app-caps">
+												App Store
+												<span>Will Be soon  Available</span>
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				
+				<div class="footer-bottom">
+					<div class="container">
+						<div class="row align-items-center">
+							
+							<div class="col-lg-6 col-md-6">
+								<p class="mb-0">© 2020 LearnUp. Designd By <a href="https://themezhub.com/">Themezhub</a>.</p>
+							</div>
+							
+							<div class="col-lg-6 col-md-6 text-right">
+								<ul class="footer-bottom-social">
+									<li><a href="#"><i class="ti-facebook"></i></a></li>
+									<li><a href="#"><i class="ti-twitter"></i></a></li>
+									<li><a href="#"><i class="ti-instagram"></i></a></li>
+									<li><a href="#"><i class="ti-linkedin"></i></a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</footer>
+			<!-- ============================ Footer End ================================== -->
+			<!-- Log In Modal -->
+			<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="registermodal" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered login-pop-form" role="document">
+					<div class="modal-content" id="registermodal">
+						<span class="mod-close" data-dismiss="modal" aria-hidden="true"><i class="ti-close"></i></span>
+						<div class="modal-body">
+							<h4 class="modal-header-title">Log In</h4>
+							<div class="login-form">
+								<form>
+								
+									<div class="form-group">
+										<label>User Name</label>
+										<input type="text" class="form-control" placeholder="Username">
+									</div>
+									
+									<div class="form-group">
+										<label>Password</label>
+										<input type="password" class="form-control" placeholder="*******">
+									</div>
+									
+									<div class="form-group">
+										<button type="submit" class="btn btn-md full-width pop-login">Login</button>
+									</div>
+								
+								</form>
+							</div>
+							
+							<div class="social-login mb-3">
+								<ul>
+									<li>
+										<input id="reg" class="checkbox-custom" name="reg" type="checkbox">
+										<label for="reg" class="checkbox-custom-label">Save Password</label>
+									</li>
+									<li class="right"><a href="#" class="theme-cl">Forget Password?</a></li>
+								</ul>
+							</div>
+							
+							<div class="modal-divider"><span>Or login via</span></div>
+							<div class="social-login ntr mb-3">
+								<ul>
+									<li><a href="#" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>
+									<li><a href="#" class="btn connect-google"><i class="ti-google"></i>Google</a></li>
+								</ul>
+							</div>
+							
+							<div class="text-center">
+								<p class="mt-2">Haven't Any Account? <a href="register.html" class="link">Click here</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Modal -->
+			
+			<!-- Sign Up Modal -->
+			<div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered login-pop-form" role="document">
+					<div class="modal-content" id="sign-up">
+						<span class="mod-close" data-dismiss="modal" aria-hidden="true"><i class="ti-close"></i></span>
+						<div class="modal-body">
+							<h4 class="modal-header-title">Sign Up</h4>
+							<div class="login-form">
+								<form>
+								
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Full Name">
+									</div>
+									
+									<div class="form-group">
+										<input type="email" class="form-control" placeholder="Email">
+									</div>
+									
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Username">
+									</div>
+									
+									<div class="form-group">
+										<input type="password" class="form-control" placeholder="*******">
+									</div>
+
+									
+									<div class="form-group">
+										<button type="submit" class="btn btn-md full-width pop-login">Sign Up</button>
+									</div>
+								
+								</form>
+							</div>
+							
+							<div class="modal-divider"><span>Or Signup via</span></div>
+							<div class="social-login ntr mb-3">
+								<ul>
+									<li><a href="#" class="btn connect-fb"><i class="ti-facebook"></i>Facebook</a></li>
+									<li><a href="#" class="btn connect-google"><i class="ti-google"></i>Google</a></li>
+								</ul>
+							</div>
+							
+							<div class="text-center">
+								<p class="mt-3"><i class="ti-user mr-1"></i>Already Have An Account? <a href="#" class="link">Go For LogIn</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Modal -->
+			
+			<a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
+		</div>
+		
+		<!-- ============================================================== -->
+		<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'assets/js/popper.min.js' %}"></script>
+		<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'assets/js/select2.min.js' %}"></script>
+		<script src="{% static 'assets/js/slick.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.counterup.min.js' %}"></script>
+		<script src="{% static 'assets/js/counterup.min.js' %}"></script>
+		<script src="{% static 'assets/js/custom.js' %}"></script>
+		<!-- ============================================================== -->
+		<!-- This page plugins -->
+		<!-- ============================================================== -->
+	</body>
+<!-- Mirrored from themezhub.net/learnup-demo-2/learnup/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 05 Mar 2025 18:37:51 GMT -->
